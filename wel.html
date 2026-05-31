@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="miTEST - Discover your English level (A1–C2) with instant feedback and tailored learning suggestions.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="miTEST">
+
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIm1pVEVTVCIsCiAgInNob3J0X25hbWUiOiAibWlURVNUIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmOWZkIiwKICAidGhlbWVfY29sb3IiOiAiIzRGNDZFNSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyByeD0nMjAnIGZpbGw9JyUyMzRGNDZFNScvJTNFJTNDdGV4dCB4PSc1MCcgeT0nNjgnIGZvbnQtc2l6ZT0nNDUnIGZpbGw9JyUyM2ZmZicgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J0FyaWFsLCBzYW5zLXNlcmlmJyBmb250LXdlaWdodD0nYm9sZCclM0VtaSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0KICBdCn0=">
+
+    <title>miTEST - Discover Your English Level</title>
+
+    <link rel="stylesheet" href="Welcome/style.css">
+</head>
+
+<body>
+<!-- OFFLINE BANNER -->
+<div class="network-toast offline" id="offlineBanner">
+    <div class="toast-icon">📡</div>
+    <div class="toast-content">
+        <h4>Network issues</h4>
+        <p>You are offline — but miTEST still works!</p>
+    </div>
+</div>
+
+<!-- ONLINE BANNER -->
+<div class="network-toast online" id="onlineBanner">
+    <div class="toast-icon">✓</div>
+    <div class="toast-content">
+        <h4>Back online</h4>
+        <p>Your connection has been restored!</p>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" aria-live="assertive"></div>
+
+<!-- INSTALL PROMPT -->
+<div class="install-prompt" id="installPrompt" aria-live="polite">
+    <span data-i18n="installPrompt">📲 Install miTEST for quick access</span>
+    <button id="installBtn" data-i18n="installBtn">Install</button>
+    <button class="close-prompt" id="closeInstallPrompt" aria-label="Close install prompt">&times;</button>
+</div>
+
+<!-- MAIN APP -->
+<main class="app-container" role="main">
+
+    <!-- Hero Section -->
+    <section class="hero" aria-label="Welcome header">
+        <div class="logo-area">
+            <div class="logo-icon" aria-hidden="true">mi</div>
+        </div>
+
+        <div class="language-switcher" id="languageSwitcher">
+            <button
+                class="lang-trigger"
+                id="langTrigger"
+                aria-label="Change language"
+                aria-expanded="false"
+                type="button">
+                <span class="lang-label">EN</span>
+                <svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 9L12 15L18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <!-- Language Dropdown -->
+            <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-dropdown-header">
+                    <span class="lang-icon-wrapper">
+                        <svg class="lang-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="12" cy="12" rx="4" ry="10" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <p class="lang-dropdown-text" data-i18n="langDropdownTx">Choose language</p>
+                </div>
+                <div class="lang-options-divider"></div>
+                <button class="lang-option active" data-lang="en" type="button">
+                    <span class="lang-flag">🇬🇧</span>
+                    <span class="lang-option-text" data-i18n="EnlangCH">English</span>
+                    <span class="lang-check">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </button>
+                <button class="lang-option" data-lang="fr" type="button">
+                    <span class="lang-flag">🇫🇷</span>
+                    <span class="lang-option-text" data-i18n="FrlangCH">Français</span>
+                    <span class="lang-check">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+<!-- =========================
+     MODERN WELCOME CARD
+========================= -->
+<section class="welcome-hero" aria-labelledby="welcomeHeading">
+
+    <!-- Ambient Background -->
+    <div class="welcome-gradient"></div>
+    <div class="welcome-grid"></div>
+
+    <!-- Floating Shapes -->
+    <div class="welcome-orb welcome-orb--one"></div>
+    <div class="welcome-orb welcome-orb--two"></div>
+
+    <div class="welcome-card">
+
+        <!-- Top Row -->
+        <div class="welcome-top">
+
+            <div class="welcome-icon-box" aria-hidden="true">
+                👋
+            </div>
+
+            <div class="welcome-text-content">
+
+                <span class="welcome-badge">
+                    AI English Assessment
+                </span>
+
+                <h1 class="welcome-title" id="welcomeHeading">
+                    Welcome
+                    <span id="guestName" class="welcome-user-name">
+                        Alex
+                    </span>
+                </h1>
+
+            </div>
+
+        </div>
+
+        <!-- Description -->
+        <p class="welcome-description" data-i18n="welcomeDesc">
+            Your personalized English evaluation is ready.
+            The assessment adapts dynamically to your answers
+            to provide a precise and fast understanding of your
+            current communication level.
+        </p>
+    </div>
+
+</section>
+
+    <!-- Level Progress Bar -->
+    <div class="level-bar-wrap">
+        <div class="level-label">
+            <span data-i18n="journey">🏆 Your Level Journey</span>
+            <span class="badge">CEFR</span>
+        </div>
+        <div class="progress-bar-outer">
+            <div
+                class="progress-bar-inner"
+                id="progressBar"
+                role="progressbar"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100">
+            </div>
+        </div>
+        <div class="cefr-markers">
+            <span>A1</span>
+            <span>A2</span>
+            <span>B1</span>
+            <span>B2</span>
+            <span>C1</span>
+            <span>C2</span>
+        </div>
+    </div>
+
+    <!-- Level Highlight -->
+    <div class="level-highlight" aria-labelledby="level-heading">
+        <div class="level-icon-wrap" aria-hidden="true">🌱</div>
+        <div class="level-text">
+            <h4 id="level-heading" data-i18n="levelTitle">Beginner – A1 Level</h4>
+            <p data-i18n="levelDesc">
+                Can use simple words and phrases for everyday needs. Understands very basic sentences and can introduce themselves.
+            </p>
+        </div>
+    </div>
+
+<!-- =========================
+     SMART TEST OVERVIEW
+========================= -->
+<section class="exam-overview" aria-labelledby="exam-overview-title">
+
+    <div class="overview-header">
+        <span class="overview-badge">Assessment Preview</span>
+        <h2 id="exam-overview-title">
+            Everything you need before starting
+        </h2>
+        <p class="overview-subtitle">
+            Quick insights about the evaluation experience.
+        </p>
+    </div>
+
+    <!-- Card 1 -->
+    <article class="overview-card">
+        <div class="card-glow"></div>
+
+        <div class="card-icon time">
+            <span>⏳</span>
+        </div>
+
+        <div class="card-content">
+            <div class="card-label">Estimated Time</div>
+            <div class="card-value">18 Minutes</div>
+            <div class="card-meta">
+                Flexible pace • Auto-save enabled
+            </div>
+        </div>
+
+        <div class="card-side-tag">01</div>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="overview-card">
+        <div class="card-glow"></div>
+
+        <div class="card-icon questions">
+            <span>📚</span>
+        </div>
+
+        <div class="card-content">
+            <div class="card-label">Question Format</div>
+            <div class="card-value">24 Interactive Tasks</div>
+            <div class="card-meta">
+                Adaptive difficulty • Mixed formats
+            </div>
+        </div>
+
+        <div class="card-side-tag">02</div>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="overview-card">
+        <div class="card-glow"></div>
+
+        <div class="card-icon result">
+            <span>🏆</span>
+        </div>
+
+        <div class="card-content">
+            <div class="card-label">Final Results</div>
+            <div class="card-value">Instant Score Report</div>
+            <div class="card-meta">
+                Skills breakdown • Personalized feedback
+            </div>
+        </div>
+
+        <div class="card-side-tag">03</div>
+    </article>
+
+</section>
+
+<!-- =========================
+     SMART GOAL SECTION
+========================= -->
+<section class="level-goal-section" aria-labelledby="goalTitle">
+
+    <!-- Decorative Background -->
+    <div class="goal-bg-gradient"></div>
+    <div class="goal-bg-circle"></div>
+
+    <div class="level-goal-card">
+
+        <!-- Top Badge -->
+        <div class="goal-top-badge">
+            Placement Assessment
+        </div>
+
+        <!-- Icon -->
+        <div class="goal-icon-box" aria-hidden="true">
+            <span>🎯</span>
+            <div class="goal-icon-ring"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="goal-content">
+
+            <h2 id="goalTitle" class="goal-main-title">
+                Discover your real English proficiency
+            </h2>
+
+            <p class="goal-main-description">
+                This adaptive placement assessment analyzes your responses
+                in real time to identify your current communication level
+                with precision and consistency.
+            </p>
+
+            <!-- Level Highlight -->
+            <div class="goal-level-card">
+
+                <div class="goal-level-label">
+                    Estimated Target Level
+                </div>
+
+                <div class="goal-level-value">
+                    B1 • Upper-Intermediate
+                </div>
+
+            </div>
+
+            <!-- Stats -->
+            <div class="goal-stats">
+
+                <div class="goal-stat">
+                    <span class="goal-stat-icon">⚡</span>
+                    <div>
+                        <strong>10 min</strong>
+                        <small>Average duration</small>
+                    </div>
+                </div>
+
+                <div class="goal-stat">
+                    <span class="goal-stat-icon">📈</span>
+                    <div>
+                        <strong>95%</strong>
+                        <small>Evaluation accuracy</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- CTA Button -->
+<button
+    class="cta-button"
+    id="startTestBtn"
+    aria-label="Start the English test">
+    <span class="btn-text">I AM READY</span>
+    <span class="btn-text-loading" hidden aria-hidden="true">Preparing test...</span>
+    <span class="cta-arrow">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+        </svg>
+        <span class="spinner" hidden aria-hidden="true"></span>
+    </span>
+</button>
+
+</main>
+
+<!-- Bottom Navigation Bar -->
+<nav class="bottom-nav" aria-label="Main navigation">
+    <div class="nav-bg-glow"></div>
+    
+    <div class="nav-item active" data-tab="home" aria-current="page">
+        <div class="nav-item-bg"></div>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 17.99V14.99M12 10.99V11.99M12 4.99V5.99" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3 9.5L12 3l9 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 10v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 21V12h6v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-label">Home</span>
+    </div>
+
+    <div class="nav-item" data-tab="dashboard">
+        <div class="nav-item-bg"></div>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+            <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+            <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+            <circle cx="6.5" cy="6.5" r="1.5" fill="currentColor" opacity="0.6"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" opacity="0.6"/>
+            <circle cx="6.5" cy="17.5" r="1.5" fill="currentColor" opacity="0.6"/>
+            <circle cx="17.5" cy="17.5" r="1.5" fill="currentColor" opacity="0.6"/>
+        </svg>
+        <span class="nav-label">Dashboard</span>
+    </div>
+
+    <div class="nav-item" data-tab="profile">
+        <div class="nav-item-bg"></div>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="21" r="2" fill="currentColor" opacity="0.3"/>
+        </svg>
+        <span class="nav-label">Profile</span>
+    </div>
+
+    <!-- Floating pill indicator -->
+    <div class="nav-pill" aria-hidden="true">
+        <div class="nav-pill-shine"></div>
+    </div>
+</nav>
+
+<script src="Welcome/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>miTEST - Guest Setup</title>
+
+<link rel="stylesheet" href="Guest/style.css">
+
+</head>
+
+<body>
+
+<!-- Floating Background -->
+<div class="bg-blobs">
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+</div>
+<!-- OFFLINE -->
+<div
+    class="network-toast offline"
+    id="offlineBanner">
+
+    <div class="toast-icon">📡</div>
+
+    <div class="toast-content">
+        <h4 data-i18n="BackOffTitle">Network issues</h4>
+        <p data-i18n="BackOffText">You are offline — but miTEST still works!</p>
+    </div>
+
+</div>
+
+<!-- ONLINE -->
+<div
+    class="network-toast online"
+    id="onlineBanner">
+
+    <div class="toast-icon">✓</div>
+
+    <div class="toast-content">
+        <h4 data-i18n="BackOnTitle">Back online</h4>
+        <p data-i18n="BackOnText">Your connection has been restored!</p>
+    </div>
+
+</div>
+
+<!-- Generate Toast Notification -->
+<div id="btnToast" class="btn-toast" role="status" aria-live="polite"></div>
+
+<!-- Back Toast Notification -->
+<div id="guestToast" class="guest-toast" role="status" aria-live="polite"></div>
+
+<main class="guest-page">
+  
+<!-- HERO -->
+<section class="hero">
+        <!-- Logo -->
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                mi
+            </div>
+
+        </div>
+
+        <!-- Center Text -->
+        <div class="text-area">
+
+            <div
+                class="pg-text"
+                aria-hidden="true"
+            data-i18n="guestHead">
+                GUEST
+            </div>
+
+        </div>
+     <!-- Language Switcher -->
+        <div class="language-switcher" id="languageSwitcher">
+
+            <button
+                class="lang-trigger"
+                id="langTrigger"
+                aria-label="Change language"
+                aria-expanded="false"
+                type="button">
+
+                <span class="lang-label">EN</span>
+
+                <svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true">
+
+                    <path
+                        d="M6 9L12 15L18 9"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+            </button>
+
+<!-- language Dropdown -->
+<div class="lang-dropdown" id="langDropdown">
+  <div class="lang-dropdown-header">
+    <span class="lang-icon-wrapper">
+      <svg class="lang-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+        <ellipse cx="12" cy="12" rx="4" ry="10" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <p class="lang-dropdown-text" data-i18n="langDropdownTx">Choose language</p>
+  </div>
+
+  <div class="lang-options-divider"></div>
+
+  <button class="lang-option active" data-lang="en" type="button">
+    <span class="lang-flag">🇬🇧</span>
+    <span class="lang-option-text" data-i18n="EnlangCH">English</span>
+    <span class="lang-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+
+  <button class="lang-option" data-lang="fr" type="button">
+    <span class="lang-flag">🇫🇷</span>
+    <span class="lang-option-text" data-i18n="FrlangCH">Français</span>
+    <span class="lang-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+</div>
+</div>
+</section>
+<!-- Description -->
+<p class="tagline" data-i18n="descript"> Create a temporary profile and start improving your English instantly.</p>
+
+
+    <!-- Right Form -->
+    <section class="form-side">
+
+        <div class="form-card">
+            <form id="guestForm">
+
+                <!-- Name -->
+                <div class="input-group">
+
+                    <label for="fullName" data-i18n="fullName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        class="input-field"
+                        placeholder="John Doe"
+                        required
+                    >
+
+                </div>
+
+                <!-- Username -->
+                <div class="input-group">
+
+                    <label for="username" data-i18n="username">
+                        Username
+                    </label>
+
+                    <div class="username-box">
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="input-field"
+                            placeholder="@username"
+                            required data-i18n-placeholder="usernameInput">
+
+                        <button
+                            type="button"
+                            class="generate-btn"
+                            id="generateBtn"
+                        data-i18n="generate">
+                            Generate
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Age & Level -->
+                <div class="double-fields">
+
+                    <div class="input-group">
+
+                        <label for="age" data-i18n="age">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            class="input-field"
+                            placeholder="18"
+                            min="5"
+                            max="100"
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+    <label data-i18n="level">
+        Level
+    </label>
+
+    <div class="advanced-select-wrapper">
+        <div class="advanced-select" tabindex="0">
+            <div class="selected-option">
+                <span class="selected-text" data-i18n="lvlBg">🌱 Beginner</span>
+                <svg class="select-arrow" width="12" height="12" viewBox="0 0 12 12">
+                    <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                </svg>
+            </div>
+            
+            <div class="select-dropdown">
+                <div class="select-options">
+                    <div class="select-option active" data-value="beginner">
+                        <span class="option-icon">🌱</span>
+                        <div class="option-content">
+                            <span class="option-label" data-i18n="lvlBg">Beginner</span>
+                            <span class="option-desc">Just getting started</span>
+                        </div>
+                        <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="select-option" data-value="intermediate">
+                        <span class="option-icon">🌿</span>
+                        <div class="option-content">
+                            <span class="option-label" data-i18n="lvlInter">Intermediate</span>
+                            <span class="option-desc">Some experience</span>
+                        </div>
+                        <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="select-option" data-value="advanced">
+                        <span class="option-icon">🌳</span>
+                        <div class="option-content">
+                            <span class="option-label" data-i18n="lvlAdv">Advanced</span>
+                            <span class="option-desc">Expert knowledge</span>
+                        </div>
+                        <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M13.3 4.3L6 11.6 2.7 8.3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <input type="hidden" name="level" value="beginner" class="hidden-input">
+    </div>
+</div>
+</div>
+
+<div class="input-group">
+    <label data-i18n="country">
+        Country
+    </label>
+
+    <div class="advanced-country-select-wrapper">
+        <div class="advanced-country-select" tabindex="0">
+            <div class="selected-option">
+                <span class="selected-text">🇨🇮 Côte d'Ivoire</span>
+
+                <svg class="select-arrow" width="12" height="12" viewBox="0 0 12 12">
+                    <path d="M3 5l3 3 3-3"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          fill="none"/>
+                </svg>
+            </div>
+
+            <div class="select-dropdown">
+
+                <div class="select-search">
+                    <svg class="search-icon"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+
+                    <input type="text"
+                           class="search-input"
+                           placeholder="Search country..."
+                           data-i18n-placeholder="search">
+                </div>
+
+                <!-- AUTO GENERATED OPTIONS -->
+                <div class="select-options"></div>
+
+                <!-- Only one no-results container now -->
+                <div class="no-results" style="display: none;" role="status" aria-live="polite">
+                  <div class="no-results-container">
+
+                    <svg class="no-results-icon"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.5"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+
+                      <!-- Globe -->
+                      <circle cx="12" cy="12" r="10" class="icon-globe"/>
+                      <ellipse cx="12" cy="12" rx="4" ry="10" class="icon-meridian"/>
+                      <path d="M2 12h20" class="icon-equator"/>
+
+                      <!-- Face -->
+                      <g class="icon-face-group">
+                        <path d="M16 16s-1.5-2-4-2-4 2-4 2" class="icon-mouth"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9" class="icon-eye"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9" class="icon-eye"/>
+                      </g>
+                    </svg>
+
+                    <div class="no-results-content">
+                      <h3 class="no-results-title">
+                        No countries found
+                      </h3>
+
+                      <p class="no-results-description">
+                        Try adjusting your search or filters to find what you're looking for.
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden"
+               name="country"
+               value="Côte d'Ivoire"
+               class="hidden-input">
+    </div>
+</div>
+
+<div class="checkbox-row">
+    <input type="checkbox" id="terms" name="terms" required aria-required="true">
+    <label for="terms">
+        <span data-i18n="checkMsg">
+            I understand my guest data is stored locally.
+        </span>
+        <span aria-hidden="true" class="required-star">*</span>
+    </label>
+</div>
+
+                <!-- Button -->
+                <button 
+                class="start-btn" 
+                type="submit" 
+                data-i18n="guestBtn" 
+                id="btnOverlay">Valider</button>
+
+            </form>
+
+<!-- ADVANCED SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay" role="dialog" aria-modal="true" aria-label="Profile created successfully">
+  
+  <!-- Glass backdrop -->
+  <div class="success-backdrop"></div>
+
+  <!-- Main success card -->
+  <div class="success-card">
+    
+    <!-- Animated SVG checkmark -->
+    <div class="checkmark-wrapper">
+      <svg class="checkmark-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="checkmark-circle" cx="50" cy="50" r="45" />
+        <path class="checkmark-path" d="M28 52l16 16 28-32" />
+      </svg>
+      <div class="checkmark-glow"></div>
+    </div>
+
+    <!-- Title -->
+    <h2 class="success-title" data-i18n="successTitle">Profile Created! 🎉</h2>
+    <p class="success-subtitle" data-i18n="profileCreatedSubtitle">Review your info before continuing</p>
+
+    <!-- Profile summary -->
+    <div class="profile-summary">
+      <div class="summary-row">
+        <span class="summary-label" data-i18n="summaryName">Name</span>
+        <span class="summary-value" id="summaryName">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label" data-i18n="summaryUsername">Username</span>
+        <span class="summary-value" id="summaryUsername">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label" data-i18n="summaryLevel">Level</span>
+        <span class="summary-value" id="summaryLevel">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label" data-i18n="summaryCountry">Country</span>
+        <span class="summary-value" id="summaryCountry">—</span>
+      </div>
+    </div>
+
+    <!-- Countdown progress bar -->
+    <div class="redirect-progress">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-text" id="progressText" >Loading summary...</span>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="success-actions">
+      <button class="go-now-btn" id="goNowBtn" type="button">
+        <span data-i18n="goDashboard">Go to Home</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="stay-btn" id="stayBtn" type="button">
+        <span data-i18n="editInfo">Edit Info</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+   </section>
+
+</main>
+<!-- Back Button -->
+<button
+    class="back-trigger"
+    id="backBtn"
+    aria-label="Go back"
+    type="button">
+
+            <svg
+                class="back-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true">
+
+                <path
+                    d="M15 18L9 12L15 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <span class="back-label" data-i18n="back">
+                Back
+            </span>
+        
+</button>
+<script src="Guest/script.js"></script>
+
+</body>
+</html>

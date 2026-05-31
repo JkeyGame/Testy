@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="miTEST - Discover your English level (A1–C2) with instant feedback and tailored learning suggestions.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="miTEST">
+
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIm1pVEVTVCIsCiAgInNob3J0X25hbWUiOiAibWlURVNUIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmOWZkIiwKICAidGhlbWVfY29sb3IiOiAiIzRGNDZFNSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyByeD0nMjAnIGZpbGw9JyUyMzRGNDZFNScvJTNFJTNDdGV4dCB4PSc1MCcgeT0nNjgnIGZvbnQtc2l6ZT0nNDUnIGZpbGw9JyUyM2ZmZicgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J0FyaWFsLCBzYW5zLXNlcmlmJyBmb250LXdlaWdodD0nYm9sZCclM0VtaSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0KICBdCn0=">
+
+    <title>miTEST - Discover Your English Level</title>
+
+    <link rel="stylesheet" href="INDEX/style.css">
+</head>
+
+<body>
+<!-- OFFLINE -->
+<div
+    class="network-toast offline"
+    id="offlineBanner">
+
+    <div class="toast-icon">📡</div>
+
+    <div class="toast-content">
+        <h4>Network issues</h4>
+        <p>You are offline — but miTEST still works!</p>
+    </div>
+
+</div>
+
+<!-- ONLINE -->
+<div
+    class="network-toast online"
+    id="onlineBanner">
+
+    <div class="toast-icon">✓</div>
+
+    <div class="toast-content">
+        <h4>Back online</h4>
+        <p>Your connection has been restored!</p>
+    </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" aria-live="assertive"></div>
+
+<!-- Install Prompt -->
+<div class="install-prompt" id="installPrompt" aria-live="polite">
+
+    <span data-i18n="installPrompt">
+        📲 Install miTEST for quick access
+    </span>
+
+    <button id="installBtn" data-i18n="installBtn">
+        Install
+    </button>
+
+    <button
+        class="close-prompt"
+        id="closeInstallPrompt"
+        aria-label="Close install prompt">
+        &times;
+    </button>
+
+</div>
+
+<!-- Main App -->
+<main class="app-container" role="main">
+
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="headline">
+
+        <div class="logo-area">
+            <div class="logo-icon" aria-hidden="true">mi</div>
+        </div>
+
+        <div class="language-switcher" id="languageSwitcher">
+
+            <button
+                class="lang-trigger"
+                id="langTrigger"
+                aria-label="Change language"
+                aria-expanded="false"
+                type="button">
+
+                <span class="lang-label">EN</span>
+
+                <svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        d="M6 9L12 15L18 9"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+            </button>
+
+            <!-- language Dropdown -->
+            <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-dropdown-header">
+    <span class="lang-icon-wrapper">
+      <svg class="lang-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+        <ellipse cx="12" cy="12" rx="4" ry="10" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </span>
+                    <p class="lang-dropdown-text" data-i18n="langDropdownTx">Choose language</p>
+                </div>
+
+                <div class="lang-options-divider"></div>
+
+                <button class="lang-option active" data-lang="en" type="button">
+    <span class="lang-flag">🇬🇧</span>
+    <span class="lang-option-text" data-i18n="EnlangCH">English</span>
+    <span class="lang-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+                </button>
+
+                <button class="lang-option" data-lang="fr" type="button">
+    <span class="lang-flag">🇫🇷</span>
+    <span class="lang-option-text" data-i18n="FrlangCH">Français</span>
+    <span class="lang-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+                </button>
+            </div>
+        </div>
+
+        <h1 class="headline" id="headline">miTEST</h1>
+
+        <p class="tagline" data-i18n="tagline">
+            Discover your strengths, improve your skills, and track your progress.
+        </p>
+
+    </section>
+
+    <!-- Illustration Area -->
+    <div class="illustration-area" aria-hidden="true">
+
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+
+        <div class="skill-card card-top-left">
+            <span class="skill-icon">🧠</span>
+            <span class="skill-text" data-i18n="smartLearning">
+                Smart Learning
+            </span>
+        </div>
+
+        <div class="skill-card card-top-right">
+            <span class="skill-icon">🎧</span>
+            <span class="skill-text" data-i18n="listening">
+                Listening
+            </span>
+        </div>
+
+        <div class="skill-card card-bottom-left">
+            <span class="skill-icon">✍️</span>
+            <span class="skill-text" data-i18n="writing">
+                Writing
+            </span>
+        </div>
+
+        <div class="skill-card card-bottom-right">
+            <span class="skill-icon">💬</span>
+            <span class="skill-text" data-i18n="speaking">
+                Speaking
+            </span>
+        </div>
+
+        <div class="main-visual">
+
+            <span class="flying-letter letter-1">A</span>
+            <span class="flying-letter letter-2">B</span>
+            <span class="flying-letter letter-3">C</span>
+            <span class="flying-letter letter-4">?</span>
+
+        </div>
+
+    </div>
+
+    <!-- CTA Button -->
+    <button
+        class="cta-button"
+        id="startTestBtn"
+        aria-label="Start the English test">
+
+        <span data-i18n="start">
+            START
+        </span>
+
+        <span class="cta-arrow">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true">
+
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+
+            </svg>
+
+        </span>
+
+    </button>
+
+    <!-- 👥 Community Growth Progress Bar (transformed from user level) -->
+    <div class="level-bar-wrap">
+
+        <div class="level-label">
+            <span data-i18n="communityGrowth">
+                👥 Our Growing Community
+            </span>
+
+            <span class="badge" data-i18n="milestoneGoal">1M Goal</span>
+        </div>
+
+        <div class="progress-bar-outer">
+
+            <div
+                class="progress-bar-inner"
+                id="progressBar"
+                role="progressbar"
+                aria-valuenow="60"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="Community growth progress: 780,000 learners toward 1 million">
+            </div>
+
+        </div>
+
+        <div class="cefr-markers">
+            <span>100K</span>
+            <span>250K</span>
+            <span id="cefrB1">500K</span>
+            <span>750K</span>
+            <span>1M</span>
+            <span>🔥</span>
+        </div>
+
+    </div>
+
+    <!-- Benefits Section -->
+    <section class="benefits" aria-labelledby="benefits-heading">
+
+        <h2 id="benefits-heading" style="display:none;">
+            Benefits
+        </h2>
+
+        <div class="benefit-card">
+            <span class="benefit-icon">⚡</span>
+
+            <h3 data-i18n="fast">
+                Fast
+            </h3>
+
+            <p data-i18n="fastDesc">
+                Quick assessment in minutes
+            </p>
+        </div>
+
+        <div class="benefit-card">
+            <span class="benefit-icon">🎯</span>
+
+            <h3 data-i18n="accurate">
+                Accurate
+            </h3>
+
+            <p data-i18n="accurateDesc">
+                CEFR-aligned A1–C2
+            </p>
+        </div>
+
+        <div class="benefit-card">
+            <span class="benefit-icon">🧠</span>
+
+            <h3 data-i18n="personalized">
+                Personalized
+            </h3>
+
+            <p data-i18n="personalizedDesc">
+                Tailored learning tips
+            </p>
+        </div>
+
+    </section>
+
+    <!-- Quick Info Section -->
+    <section aria-labelledby="quick-info-heading" style="width:100%;">
+
+        <h3
+            id="quick-info-heading"
+            data-i18n="benefits"
+            style="font-size:0.95rem;font-weight:700;margin:0 0 10px;color:var(--text);">
+
+            What you'll get:
+
+        </h3>
+
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+
+            <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);">
+
+                <span style="font-size:1.2rem;">📊</span>
+
+                <span data-i18n="personalizedLevel">
+                    Personalized English level
+                </span>
+
+                <strong style="color:var(--text);">
+                    (A1–C2)
+                </strong>
+
+            </li>
+
+            <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);">
+
+                <span style="font-size:1.2rem;">⚡</span>
+
+                <span data-i18n="instantFeedback">
+                    Instant feedback on your results
+                </span>
+
+            </li>
+
+            <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text-secondary);">
+
+                <span style="font-size:1.2rem;">💡</span>
+
+                <span data-i18n="tailoredSuggestions">
+                    Tailored learning suggestions
+                </span>
+
+            </li>
+
+        </ul>
+
+    </section>
+
+    <!-- PWA Highlight -->
+    <div class="pwa-highlight" aria-labelledby="pwa-heading">
+
+        <div class="pwa-icon-wrap" aria-hidden="true">
+            📱
+        </div>
+
+        <div class="pwa-text">
+
+            <h4 id="pwa-heading" data-i18n="offlineTitle">
+                Works Offline & On-the-Go
+            </h4>
+
+            <p data-i18n="offlineDesc">
+                Mobile-friendly design • Offline access • Auto-saves your progress
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Testimonial -->
+    <div class="testimonial" aria-labelledby="quote-text">
+
+        <span class="quote-icon" aria-hidden="true">
+            "
+        </span>
+
+        <blockquote id="quote-text">
+
+            <span data-i18n="testimonial">
+                "miTEST helped me understand my real English level. The instant feedback and CEFR alignment made all the difference!"
+            </span>
+
+            <span
+                class="author"
+                data-i18n="author">
+                — Maria K., English learner
+            </span>
+
+        </blockquote>
+
+    </div>
+
+</main>
+
+<script src="INDEX/script.js"></script>
+
+</body>
+</html>

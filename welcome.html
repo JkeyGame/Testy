@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="miTEST - Discover your English level (A1–C2) with instant feedback and tailored learning suggestions.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="miTEST">
+
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIm1pVEVTVCIsCiAgInNob3J0X25hbWUiOiAibWlURVNUIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmOWZkIiwKICAidGhlbWVfY29sb3IiOiAiIzRGNDZFNSIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyByeD0nMjAnIGZpbGw9JyUyMzRGNDZFNScvJTNFJTNDdGV4dCB4PSc1MCcgeT0nNjgnIGZvbnQtc2l6ZT0nNDUnIGZpbGw9JyUyM2ZmZicgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J0FyaWFsLCBzYW5zLXNlcmlmJyBmb250LXdlaWdodD0nYm9sZCclM0VtaSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0KICBdCn0=">
+
+    <title>miTEST - Discover Your English Level</title>
+    <link rel="stylesheet" href="welcome/style.css">
+</head>
+
+<body>
+    <!-- OFFLINE BANNER -->
+    <div class="network-toast offline" id="offlineBanner">
+        <div class="toast-icon">📡</div>
+        <div class="toast-content">
+            <h4 data-i18n="networkOfflineTitle">Network issues</h4>
+            <p data-i18n="networkOfflineDesc">You are offline — but miTEST still works!</p>
+        </div>
+    </div>
+
+    <!-- ONLINE BANNER -->
+    <div class="network-toast online" id="onlineBanner">
+        <div class="toast-icon">✓</div>
+        <div class="toast-content">
+            <h4 data-i18n="networkOnlineTitle">Back online</h4>
+            <p data-i18n="networkOnlineDesc">Your connection has been restored!</p>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast" aria-live="assertive"></div>
+
+    <!-- INSTALL PROMPT -->
+    <div class="install-prompt" id="installPrompt" aria-live="polite">
+        <span data-i18n="installPromptText">📲 Install miTEST for quick access</span>
+        <button id="installBtn" data-i18n="installBtn">Install</button>
+        <button class="close-prompt" id="closeInstallPrompt" aria-label="Close install prompt" data-i18n-aria="installCloseAria">&times;</button>
+    </div>
+
+    <!-- DASHBOARD PANEL (locked until first test completed) -->
+    <section class="panel dashboard-panel" id="dashboardPanel" aria-labelledby="dashboardTitle">
+        <div class="panel-content">
+            <h2 id="dashboardTitle" data-i18n="dashboardTitle">Dashboard</h2>
+            <!-- Locked state -->
+            <div class="dashboard-locked" id="dashboardLocked">
+                <div class="locked-icon">🔒</div>
+                <h3 data-i18n="dashboardLockedTitle">Unavailable!</h3>
+                <p data-i18n="dashboardLockedDesc">Please complete your first test before consulting the dashboard.</p>
+            </div>
+            <!-- Unlocked content -->
+            <div class="dashboard-content" id="dashboardContent" style="display:none;">
+                <p data-i18n="dashboardUnlockedDesc">Your detailed performance analytics will appear here.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFILE PANEL -->
+    <section class="panel profile-panel" id="profilePanel" aria-labelledby="profileTitle">
+        <div class="panel-content">
+            <h2 id="profileTitle" data-i18n="profileTitle">Profile</h2>
+            <div class="profile-avatar" id="profileAvatar">👤</div>
+            <h3 class="profile-name" id="profileName">Alex</h3>
+            <p class="profile-email" id="profileEmail">alex@mitest.app</p>
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileLevel">A1</div>
+                    <div class="profile-stat-label" data-i18n="profileLevelLabel">Level</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileProgress">10%</div>
+                    <div class="profile-stat-label" data-i18n="profileProgressLabel">Progress</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileRank">Starter</div>
+                    <div class="profile-stat-label" data-i18n="profileRankLabel">Rank</div>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <button class="btn-primary-outline" id="profileEditBtn" data-i18n="profileEditBtn">Edit Profile</button>
+                <button class="btn-danger-outline" id="profileLogoutBtn" data-i18n="profileLogoutBtn">Logout</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN APP -->
+    <main class="app-container" role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-label="Welcome header">
+            <div class="logo-area">
+                <div class="logo-icon" aria-hidden="true">mi</div>
+            </div>
+
+            <div class="language-switcher" id="languageSwitcher">
+                <button class="lang-trigger" id="langTrigger" aria-label="Change language" aria-expanded="false" type="button">
+                    <span class="lang-label">EN</span>
+                    <svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6 9L12 15L18 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-dropdown-header">
+                        <span class="lang-icon-wrapper">
+                            <svg class="lang-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                                <ellipse cx="12" cy="12" rx="4" ry="10" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p class="lang-dropdown-text" data-i18n="langChoose">Choose language</p>
+                    </div>
+                    <div class="lang-options-divider"></div>
+                    <button class="lang-option active" data-lang="en" type="button">
+                        <span class="lang-flag">🇬🇧</span>
+                        <span class="lang-option-text" data-i18n="langEnglish">English</span>
+                        <span class="lang-check">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                    <button class="lang-option" data-lang="fr" type="button">
+                        <span class="lang-flag">🇫🇷</span>
+                        <span class="lang-option-text" data-i18n="langFrench">Français</span>
+                        <span class="lang-check">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modern Welcome Card -->
+        <section class="welcome-hero" aria-labelledby="welcomeHeading">
+            <div class="welcome-gradient"></div>
+            <div class="welcome-grid"></div>
+            <div class="welcome-orb welcome-orb--one"></div>
+            <div class="welcome-orb welcome-orb--two"></div>
+            <div class="welcome-card">
+                <div class="welcome-top">
+                    <div class="welcome-icon-box" aria-hidden="true">👋</div>
+                    <div class="welcome-text-content">
+                        <span class="welcome-badge" data-i18n="welcomeBadge">AI English Assessment</span>
+                        <h1 class="welcome-title" id="welcomeHeading">
+                            <span id="guestName" class="welcome-user-name">Alex</span>
+                        </h1>
+                    </div>
+                </div>
+                <p class="welcome-description" data-i18n="welcomeDesc">
+                    Your personalized English evaluation is ready. The assessment adapts dynamically to your answers
+                    to provide a precise and fast understanding of your current communication level.
+                </p>
+            </div>
+        </section>
+
+        <!-- Level Progress Bar -->
+        <div class="level-bar-wrap">
+            <div class="level-label">
+                <span data-i18n="levelJourney">🏆 Your Level Journey</span>
+                <span class="badge">CEFR</span>
+            </div>
+            <div class="progress-bar-outer">
+                <div class="progress-bar-inner" id="progressBar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="cefr-markers">
+                <span>A1</span><span>A2</span><span>B1</span><span>B2</span><span>C1</span><span>C2</span>
+            </div>
+        </div>
+
+        <!-- Level Highlight -->
+        <div class="level-highlight" aria-labelledby="level-heading">
+            <div class="level-icon-wrap" id="levelIcon" aria-hidden="true">🌱</div>
+            <div class="level-text">
+                <h4 id="level-heading">Beginner – A1 Level</h4>
+                <p id="levelDescription">Can use simple words and phrases for everyday needs. Understands very basic sentences and can introduce themselves.</p>
+                <div class="level-meta">
+                    <div class="level-meta-item">
+                        <span class="meta-label" data-i18n="metaRank">Current Rank</span>
+                        <strong id="userRank">Starter Learner</strong>
+                    </div>
+                    <div class="level-meta-item">
+                        <span class="meta-label" data-i18n="metaProgress">Progress</span>
+                        <strong id="userProgressText">10%</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Test Overview -->
+        <section class="exam-overview" aria-labelledby="exam-overview-title">
+            <div class="overview-header">
+                <span class="overview-badge" data-i18n="overviewBadge">Assessment Preview</span>
+                <h2 id="exam-overview-title" data-i18n="overviewTitle">Everything you need before starting</h2>
+                <p class="overview-subtitle" data-i18n="overviewSubtitle">Quick insights about the evaluation experience.</p>
+            </div>
+            <article class="overview-card">
+                <div class="card-glow"></div>
+                <div class="card-icon time"><span>⏳</span></div>
+                <div class="card-content">
+                    <div class="card-label" data-i18n="cardTimeLabel">Estimated Time</div>
+                    <div class="card-value" data-i18n="cardTimeValue">18 Minutes</div>
+                    <div class="card-meta" data-i18n="cardTimeMeta">Flexible pace • Auto-save enabled</div>
+                </div>
+                <div class="card-side-tag">01</div>
+            </article>
+            <article class="overview-card">
+                <div class="card-glow"></div>
+                <div class="card-icon questions"><span>📚</span></div>
+                <div class="card-content">
+                    <div class="card-label" data-i18n="cardQuestionsLabel">Question Format</div>
+                    <div class="card-value" data-i18n="cardQuestionsValue">24 Interactive Tasks</div>
+                    <div class="card-meta" data-i18n="cardQuestionsMeta">Adaptive difficulty • Mixed formats</div>
+                </div>
+                <div class="card-side-tag">02</div>
+            </article>
+            <article class="overview-card">
+                <div class="card-glow"></div>
+                <div class="card-icon result"><span>🏆</span></div>
+                <div class="card-content">
+                    <div class="card-label" data-i18n="cardResultLabel">Final Results</div>
+                    <div class="card-value" data-i18n="cardResultValue">Instant Score Report</div>
+                    <div class="card-meta" data-i18n="cardResultMeta">Skills breakdown • Personalized feedback</div>
+                </div>
+                <div class="card-side-tag">03</div>
+            </article>
+        </section>
+
+        <!-- Smart Goal Section -->
+        <section class="level-goal-section" aria-labelledby="goalTitle">
+            <div class="goal-bg-gradient"></div>
+            <div class="goal-bg-circle"></div>
+            <div class="level-goal-card">
+                <div class="goal-top-badge" data-i18n="goalBadge">Placement Assessment</div>
+                <div class="goal-icon-box" aria-hidden="true">
+                    <span id="goalLevelIcon">🎯</span>
+                    <div class="goal-icon-ring"></div>
+                </div>
+                <div class="goal-content">
+                    <h2 id="goalTitle" class="goal-main-title" data-i18n="goalMainTitle">Verify your real English proficiency</h2>
+                    <p class="goal-main-description" data-i18n="goalMainDesc">
+                        This is your first adaptive English placement test. Based on the level you selected during
+                        registration, miTEST will verify whether you are truly an
+                        <strong id="goalLevelName">Intermediate (B1)</strong> learner. The assessment adapts dynamically
+                        to your answers in real time to accurately determine your real communication and comprehension level.
+                    </p>
+                    <div class="goal-level-card">
+                        <div class="goal-level-label" data-i18n="goalSelectedLabel">Your Selected Level</div>
+                        <div class="goal-level-value" id="goalLevelValue">B1 • Intermediate</div>
+                    </div>
+                    <div class="goal-change-note">
+                        <span class="goal-note-icon">💡</span>
+                        <p data-i18n="goalChangeNote">Don't worry if your final result changes. This evaluation is designed to discover your real
+                            English proficiency, which may be higher or lower than your selected level.</p>
+                    </div>
+                    <div class="goal-stats">
+                        <div class="goal-stat">
+                            <span class="goal-stat-icon">⚡</span>
+                            <div><strong data-i18n="goalAvgDuration">10 min</strong><small data-i18n="goalAvgDurationLabel">Average duration</small></div>
+                        </div>
+                        <div class="goal-stat">
+                            <span class="goal-stat-icon">📈</span>
+                            <div><strong data-i18n="goalAccuracy">95%</strong><small data-i18n="goalAccuracyLabel">Evaluation accuracy</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Button -->
+        <button class="cta-button" id="startTestBtn" aria-label="Start the English test">
+            <span class="btn-text" data-i18n="ctaReady">I AM READY</span>
+            <span class="btn-text-loading" hidden aria-hidden="true" data-i18n="ctaPreparing">Preparing test...</span>
+            <span class="cta-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                </svg>
+                <span class="spinner" hidden aria-hidden="true"></span>
+            </span>
+        </button>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav" aria-label="Main navigation">
+        <div class="nav-bg-glow"></div>
+        <div class="nav-item active" data-tab="home" aria-current="page">
+            <div class="nav-item-bg"></div>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 17.99V14.99M12 10.99V11.99M12 4.99V5.99" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M3 9.5L12 3l9 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 10v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 21V12h6v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="nav-label" data-i18n="navHome">Home</span>
+        </div>
+        <div class="nav-item disabled" data-tab="dashboard" id="dashboardTab">
+            <div class="nav-item-bg"></div>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/>
+                <circle cx="6.5" cy="6.5" r="1.5" fill="currentColor" opacity="0.6"/>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" opacity="0.6"/>
+                <circle cx="6.5" cy="17.5" r="1.5" fill="currentColor" opacity="0.6"/>
+                <circle cx="17.5" cy="17.5" r="1.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+            <span class="nav-label" data-i18n="navDashboard">Dashboard</span>
+        </div>
+        <div class="nav-item" data-tab="profile" id="profileTab">
+            <div class="nav-item-bg"></div>
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="21" r="2" fill="currentColor" opacity="0.3"/>
+            </svg>
+            <span class="nav-label" data-i18n="navProfile">Profile</span>
+        </div>
+        <div class="nav-pill" aria-hidden="true">
+            <div class="nav-pill-shine"></div>
+        </div>
+    </nav>
+
+    <script src="welcome/script.js"></script>
+</body>
+</html>

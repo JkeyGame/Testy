@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="miTEST - Continue your English journey">
+
+    <title>miTEST - Continue</title>
+
+    <link rel="stylesheet" href="INDEX/style.css">
+
+</head>
+
+<body>
+<!-- OFFLINE -->
+<div
+    class="network-toast offline"
+    id="offlineBanner">
+
+    <div class="toast-icon">📡</div>
+
+    <div class="toast-content">
+        <h4>Network issues</h4>
+        <p>You are offline — but miTEST still works!</p>
+    </div>
+
+</div>
+
+<!-- ONLINE -->
+<div
+    class="network-toast online"
+    id="onlineBanner">
+
+    <div class="toast-icon">✓</div>
+
+    <div class="toast-content">
+        <h4>Back online</h4>
+        <p>Your connection has been restored!</p>
+    </div>
+
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="auth-toast" role="status" aria-live="polite"></div>
+
+<main class="app-container" role="main">
+
+<!-- Hero Section -->
+<section class="hero">
+        <!-- Language Switcher -->
+        <div class="language-switcher" id="languageSwitcher">
+
+            <button
+                class="lang-trigger"
+                id="langTrigger"
+                aria-label="Change language"
+                aria-expanded="false"
+                type="button">
+
+                <span class="lang-label">EN</span>
+
+                <svg class="lang-chevron" viewBox="0 0 24 24" aria-hidden="true">
+
+                    <path
+                        d="M6 9L12 15L18 9"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+
+            </button>
+
+<!-- language Dropdown -->
+<div class="lang-dropdown" id="langDropdown">
+  <div class="lang-dropdown-header">
+    <span class="lang-icon-wrapper">
+      <svg class="lang-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+        <ellipse cx="12" cy="12" rx="4" ry="10" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <p class="lang-dropdown-text" data-i18n="langDropdownTx">Choose language</p>
+  </div>
+
+  <div class="lang-options-divider"></div>
+
+  <button class="lang-option active" data-lang="en" type="button">
+    <span class="lang-flag">🇬🇧</span>
+    <span class="lang-option-text" data-i18n="EnlangCH">English</span>
+    <span class="lang-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+
+  <button class="lang-option" data-lang="fr" type="button">
+    <span class="lang-flag">🇫🇷</span>
+    <span class="lang-option-text" data-i18n="FrlangCH">Français</span>
+    <span class="lang-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+</div>
+</div>
+</div>
+
+    <!-- Logo -->
+    <div class="logo-area">
+
+        <div class="logo-icon" aria-hidden="true">
+            mi
+        </div>
+
+    </div>
+
+    <!-- Headline -->
+    <h1 class="headline" data-i18n="welcome">
+        Welcome 👋
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="tagline" data-i18n="continueChoice">
+        Choose how you want to continue
+    </p>
+
+</section>
+
+    <!-- Illustration Area -->
+    <div class="illustration-area" aria-hidden="true">
+
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+
+        <div class="skill-card card-top-left">
+
+            <span class="skill-icon">🧠</span>
+
+            <span class="skill-text">
+                Smart Learning
+            </span>
+
+        </div>
+
+        <div class="skill-card card-top-right">
+
+            <span class="skill-icon">🎧</span>
+
+            <span class="skill-text">
+                Listening
+            </span>
+
+        </div>
+
+        <div class="skill-card card-bottom-left">
+
+            <span class="skill-icon">✍️</span>
+
+            <span class="skill-text">
+                Writing
+            </span>
+
+        </div>
+
+        <div class="skill-card card-bottom-right">
+
+            <span class="skill-icon">💬</span>
+
+            <span class="skill-text">
+                Speaking
+            </span>
+
+        </div>
+
+        <div class="main-visual">
+
+            <span class="flying-letter letter-1">A</span>
+            <span class="flying-letter letter-2">B</span>
+            <span class="flying-letter letter-3">C</span>
+            <span class="flying-letter letter-4">✓</span>
+
+        </div>
+
+    </div>
+
+    <!-- Auth Buttons -->
+    <div class="auth-options">
+
+        <button
+            class="btn-outline primary-outline"
+            id="signInBtn"
+            aria-label="Sign in to your account" data-i18n="signMsg">
+
+            Sign In
+
+        </button>
+
+        <button
+            class="btn-outline"
+            id="guestBtn"
+            aria-label="Continue without signing in" data-i18n="guestMsg">
+
+            Continue as Guest
+
+        </button>
+
+    </div>
+
+    <!-- Info Text -->
+    <p
+        style="
+            margin-top:18px;
+            font-size:0.82rem;
+            color:var(--text-secondary);
+            text-align:center;
+            line-height:1.5;
+        " data-i18n="saveProgress">
+
+        Sign in to save your progress and access your results later.
+
+    </p>
+
+
+
+</main>
+<!-- Back Button -->
+<button
+    class="back-trigger"
+    id="backBtn"
+    aria-label="Go back"
+    type="button">
+
+            <svg
+                class="back-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true">
+
+                <path
+                    d="M15 18L9 12L15 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <span class="back-label" data-i18n="back">
+                Back
+            </span>
+        
+</button>
+<script src="INDEX/script.js"></script>
+
+</body>
+</html>
